@@ -22,8 +22,6 @@ const CreateLessons = () => {
             console.log("test true")
             setErrorForm(true);
         } else {
-            console.log("test false")
-            // createLesson();
         }
       };
 

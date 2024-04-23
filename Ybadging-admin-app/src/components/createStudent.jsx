@@ -6,11 +6,12 @@ const CreateStudent = () => {
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [RFID, setRFID] = useState("");
+    const [promo, setPromo] = useState("");
     const [errorForm, setErrorForm] = useState("");
 
     const handlesubmit = (e) => {
         e.preventDefault();
-        if (firstname=="" || lastname=="" || email=="" || RFID==""){
+        if (firstname=="" || lastname=="" || email=="" || RFID=="" || promo==""){
             setErrorForm(true);
         } else {
             
@@ -49,6 +50,15 @@ const CreateStudent = () => {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
+                    }}
+                    required/>
+                </label>
+                <label>
+                    Promo
+                    <input type="text" name="promo" 
+                    value={promo}
+                    onChange={(e) => {
+                      setPromo(e.target.value);
                     }}
                     required/>
                 </label>
