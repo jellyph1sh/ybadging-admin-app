@@ -1,0 +1,11 @@
+body {
+    background-color: #B8CBD0;
+    
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}

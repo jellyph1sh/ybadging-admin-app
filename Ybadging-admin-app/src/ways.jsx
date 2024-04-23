@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Connection from "./pages/connectionPage.jsx";
 import AdminPage from "./pages/adminPage.jsx";
 import ProfessorPage from "./pages/professorPage.jsx";
-import Lesson from "./components/lesson.jsx";
+import Lesson from "./componentsAdmin/lesson.jsx";
 
 const Ways = () => {
   return (

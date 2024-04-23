@@ -1,5 +1,5 @@
 import React from "react";
-import Lesson from "../components/lesson.jsx";
+import Lesson from "../componentsAdmin/lesson.jsx";
 import AllLessons from "../componentsAdmin/allLessons.jsx";
 import AllPastLessons from "../componentsAdmin/allPastLessons.jsx";
 import CreateLessons from "../componentsAdmin/createLesson.jsx";
