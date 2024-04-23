@@ -1,6 +1,6 @@
 import React from "react";
 
-const Lessons = () => {
+const Lesson = () => {
     const data = [{id:0, name: "John Doe", status: 0}, {id:1, name:"Jane Doe", status: 1}]
     return (
         <body >
@@ -34,4 +34,4 @@ const Lessons = () => {
     );
 };
 
-export default Lessons;
+export default Lesson;
