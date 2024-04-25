@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require('electron');
+const { protocol } = require('electron')
+
 const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -6,8 +8,15 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+protocol.registerSchemesAsPrivileged([
+
+    { scheme: 'http', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: true, stream: true } },
+  { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: true, stream: true } },
+  { scheme: 'mailto', privileges: { standard: true } },
+])
+
 const createWindow = () => {
-  // Create the browser window.
+
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,

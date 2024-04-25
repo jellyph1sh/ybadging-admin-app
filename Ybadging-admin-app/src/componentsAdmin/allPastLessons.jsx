@@ -1,18 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const AllPastLessons = () => {
-    const lessons = [{id:0, name: "UX Design", dateStart:"2024-04-22 13:00:00.000", dateEnd:"2024-04-23 17:00:00.000",namePromo:"info1",nameClassroom:"201", professor1:"John Doe", professor2:"Jane Doe"}, {id:1, name: "Data", dateStart:"2020-05-23 15:00:00.000", dateEnd:"2020-05-23 17:00:00.000",namePromo:"info2",nameClassroom:"201", professor1:"John Doe", professor2:"Jane Doe"}]
+    const [lessons, setLessons] = useState([]);
     const navigate = useNavigate();
+    const [cookies, setCookie] = useCookies(["idLesson"]);
 
-    const goToLesson = () => {
-        navigate("/Lesson");
+    const goToLesson = (id) => {
+      setCookie("idLesson", id, { path: "/" })
+      navigate("/Lesson");
     };
+
+    useEffect(() => {
+        getLesson();
+      }, []);
+
+    const getLesson = async () => {
+        await axios
+          .get(
+            "http://localhost:3001/api/lessons/getLessons",{})
+          .then((response) => {
+            if (!response.data.status) {
+              console.log(response.data.error);
+              return;
+            }
+            setLessons(response.data.lessons)
+            console.log(lessons)
+          })
+          .catch(function (error) {
+            console.log(error);
+            return;
+          });
+      };
 
     return (
         <body >
         <div>
-            <h1>UX Design</h1>
+            <h1>PAST LESSON</h1>
         </div>
         <article>
             <div>
@@ -23,8 +49,13 @@ const AllPastLessons = () => {
                             <p>{`${lesson.name}`}</p>
                             <p>{`${lesson.dateStart} - ${lesson.dateEnd}`}</p>
                             <p>{`${lesson.namePromo} - ${lesson.nameClassroom}`}</p> 
-                            <p>{`${lesson.professor1} - ${lesson.professor2}`}</p> 
-                            <button onClick={goToLesson}>See the lesson</button>
+                            <p>{`${lesson.professor1} `}</p> 
+                            {lesson.professor2 != null ? 
+                                <p>{`- ${lesson.professor2}`}</p>
+                                : 
+                                <></>
+                            }
+                            <button onClick={() => goToLesson(lesson.id)}>See the lesson</button>
                         </div>
                         : 
                         <></>
