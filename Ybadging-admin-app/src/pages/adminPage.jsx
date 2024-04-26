@@ -6,7 +6,6 @@ import AllPastLessons from "../components/allPastLessons.jsx";
 import CreateLessons from "../components/createLesson.jsx";
 import CreateStudent from "../components/createStudent.jsx";
 import CreateProfessor from "../components/createProfessor.jsx";
-import CreateClassroom from "../components/createClassroom.jsx";
 
 const AdminPage = () => {
 

@@ -10,6 +10,7 @@ const CreateStudent = () => {
     const [RFID, setRFID] = useState("");
     const [idPromo, setIdPromo] = useState("");
     const [errorForm, setErrorForm] = useState("");
+    const [validForm, setValidForm] = useState("");
 
     const [promos, setPromos] = useState([]);
 
@@ -38,8 +39,19 @@ const CreateStudent = () => {
         e.preventDefault();
         if (firstname=="" || lastname=="" || email=="" || RFID=="" || idPromo==""){
             setErrorForm(true);
+            setValidForm(false)
         } else {
             createStudent(firstname,lastname,email,RFID,idPromo)
+            setFirstname("");
+            setLastname("");
+            setEmail("");
+            setRFID("");
+            setIdPromo("");
+            e.firstname = "";
+            e.lastname = "";
+            e.email = "";
+            e.idPromo = "";
+            e.RFID = "";
         }
     };
 
@@ -50,10 +62,16 @@ const CreateStudent = () => {
         .then((response) => {
             if (!response.data.status) {
                 console.log(response.data.error);
+                setErrorForm(true)
+                setValidForm(false)
                 return;
             }
+            setErrorForm(false)
+            setValidForm(true)
         })
         .catch(function (error) {
+            setErrorForm(true)
+            setValidForm(false)
             console.log(error);
             return;
         });
@@ -122,6 +140,11 @@ const CreateStudent = () => {
                 </label>
                 {errorForm==true ? 
                     <div>one field is empty</div>
+                    : 
+                    <></>
+                }
+                {validForm==true ? 
+                    <div>The student is created</div>
                     : 
                     <></>
                 }

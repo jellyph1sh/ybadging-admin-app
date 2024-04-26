@@ -11,7 +11,9 @@ const CreateLessons = () => {
     const [idPromo, setIdPromo] = useState("");
     const [idProfessor1, setIdProfessor1] = useState("");
     const [idProfessor2, setIdProfessor2] = useState("");
+
     const [errorForm, setErrorForm] = useState(false);
+    const [validForm, setValidForm] = useState(false);
 
     const [promos, setPromos] = useState([]);
     const [classroom, setClassroom] = useState([]);
@@ -78,11 +80,26 @@ const CreateLessons = () => {
         e.preventDefault();
         
         if (idClassroom=="" || idProfessor1=="" || idPromo==""){
-            console.log("test true")
             setErrorForm(true);
+            setValidForm(false)
         } else {
-          
             createLesson(lessonName,dateFormat(lessonStart,lessonDate),dateFormat(lessonEnd,lessonDate),idClassroom,idPromo)
+            setLessonName("");
+            setLessonDate("");
+            setLessonStart("");
+            setLessonEnd("");
+            setIdPromo("");
+            setIdClassroom("");
+            setIdProfessor1("");
+            setIdProfessor2("");
+            e.lessonName = "";
+            e.lessonDate = "";
+            e.lessonStart = "";
+            e.lessonEnd = "";
+            e.idClassroom = "";
+            e.idPromo = "";
+            e.idProfessor1 = "";
+            e.idProfessor2 = "";
         }
       };
 
@@ -127,11 +144,16 @@ const CreateLessons = () => {
       .then((response) => {
           if (!response.data.status) {
               console.log(response.data.error);
+              setErrorForm(true);
+              setValidForm(false)
               return;
           }
-          console.log("test reussit")
+          setErrorForm(false);
+          setValidForm(true)
       })
       .catch(function (error) {
+          setErrorForm(true);
+          setValidForm(false)
           console.log(error);
           return;
       });
@@ -254,10 +276,15 @@ const CreateLessons = () => {
                 </label>
                 </div>
                 {errorForm==true ? 
-                            <div>one field is empty</div>
-                            : 
-                            <></>
-                        }
+                    <div>one field is empty</div>
+                    : 
+                    <></>
+                }
+                {validForm==true ? 
+                    <div>Lesson created</div>
+                    : 
+                    <></>
+                }
                 <div>
                     <button onClick={handlesubmit}>Create</button>
                 </div>
