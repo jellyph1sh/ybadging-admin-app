@@ -62,6 +62,26 @@ const Lesson = () => {
         }
     };
 
+    function formatDateFrHours(date) {
+        const dateObj = new Date(date);
+        const hour = dateObj.getHours();
+        let minute = dateObj.getMinutes();
+        if (minute<10){
+            minute = minute.toString()
+            minute = "0" + minute
+        }
+        return `${hour}H${minute}`;
+      }
+
+      function formatDateFrDay(date) {
+        const moisFr = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+        const dateObj = new Date(date);
+        const jour = dateObj.getDate();
+        const mois = moisFr[dateObj.getMonth()];
+        const annee = dateObj.getFullYear();
+        return `${jour} ${mois} ${annee}`;
+      }
+
     const changeStatusRequest = async (status,idStudent,idLesson) => {
         await axios
         .put(
@@ -87,7 +107,7 @@ const Lesson = () => {
             </div>
             <div>
                 <h3>{`Room : ${data.nameClassroom}`} </h3>
-                <h3>{`${data.dateStart} - ${data.dateEnd}`}</h3>
+                <h3>{`${formatDateFrDay(data.dateStart)} ${formatDateFrHours(data.dateStart)} - ${formatDateFrHours(data.dateEnd)}`}</h3>
             </div>
             </div>
         )}

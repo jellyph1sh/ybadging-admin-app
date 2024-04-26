@@ -11,7 +11,7 @@ const AdminPage = () => {
 
   return (
     <body >
-      <CreateLessons/>
+      <AllLessons/>
     </body>
   );
 };

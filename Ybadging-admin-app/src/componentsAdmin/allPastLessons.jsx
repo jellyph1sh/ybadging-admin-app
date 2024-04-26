@@ -35,6 +35,26 @@ const AllPastLessons = () => {
           });
       };
 
+      function formatDateFrHours(date) {
+        const dateObj = new Date(date);
+        const hour = dateObj.getHours();
+        let minute = dateObj.getMinutes();
+        if (minute<10){
+            minute = minute.toString()
+            minute = "0" + minute
+        }
+        return `${hour}H${minute}`;
+      }
+
+      function formatDateFrDay(date) {
+        const moisFr = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+        const dateObj = new Date(date);
+        const jour = dateObj.getDate();
+        const mois = moisFr[dateObj.getMonth()];
+        const annee = dateObj.getFullYear();
+        return `${jour} ${mois} ${annee}`;
+      }
+
     return (
         <body >
         <div>
@@ -44,10 +64,10 @@ const AllPastLessons = () => {
             <div>
                 {lessons.map(lesson => 
                 <div key={lesson.id}>
-                    {new Date(lesson.dateEnd).getTime()<Date.now() ? 
+                    {new Date(lesson.dateEnd)>new Date(Date.now())  ? 
                         <div className="lesson">
                             <p>{`${lesson.name}`}</p>
-                            <p>{`${lesson.dateStart} - ${lesson.dateEnd}`}</p>
+                            <p>{`${formatDateFrDay(lesson.dateStart)} ${formatDateFrHours(lesson.dateStart)} - ${formatDateFrHours(lesson.dateEnd)}`}</p>
                             <p>{`${lesson.namePromo} - ${lesson.nameClassroom}`}</p> 
                             <p>{`${lesson.professor1} `}</p> 
                             {lesson.professor2 != null ? 
