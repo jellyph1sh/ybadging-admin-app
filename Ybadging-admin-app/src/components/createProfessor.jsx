@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CreateProfessor = () => {
 
@@ -8,15 +9,47 @@ const CreateProfessor = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorForm, setErrorForm] = useState("");
+    const [validForm, setValidForm] = useState("");
 
     const handlesubmit = (e) => {
         e.preventDefault();
         if (firstname=="" || lastname=="" || email=="" || password==""){
             setErrorForm(true);
+            setValidForm(false)
         } else {
-            
+            createProfessor(firstname,lastname,email,password)
+            setFirstname("");
+            setLastname("");
+            setEmail("");
+            setPassword("");
+            e.firstname = "";
+            e.lastname = "";
+            e.email = "";
+            e.password = "";
         }
       };
+
+    const createProfessor = async (firstname,lastname,email,password) => {
+        await axios
+        .post(
+            "http://localhost:3001/api/user/add",{firstname: firstname, lastname: lastname, email: email, password: password})
+        .then((response) => {
+            if (!response.data.status) {
+                console.log(response.data.error);
+                setValidForm(false)
+                setErrorForm(true);
+                return;
+            }
+            setValidForm(true)
+            setErrorForm(false);
+        })
+        .catch(function (error) {
+            console.log(error);
+            setValidForm(false)
+            setErrorForm(true);
+            return;
+        });
+    };
 
     return (
         <body >
@@ -55,7 +88,7 @@ const CreateProfessor = () => {
                     required/>
                 </label>
                 <label>
-                    Promo
+                    Password
                     <input type="text" name="password" 
                     value={password}
                     onChange={(e) => {
@@ -66,6 +99,11 @@ const CreateProfessor = () => {
 
                 {errorForm==true ? 
                     <div>one field is empty</div>
+                    : 
+                    <></>
+                }
+                {validForm==true ? 
+                    <div>The professor account is created</div>
                     : 
                     <></>
                 }
