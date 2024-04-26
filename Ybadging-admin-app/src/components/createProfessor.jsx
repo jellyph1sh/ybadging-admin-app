@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const CreateProfessor = () => {
 
@@ -19,6 +20,7 @@ const CreateProfessor = () => {
 
     return (
         <body >
+            <Link to="/Admin">Home</Link>
         <div>
             <h1>CREATE A PROFESSOR</h1>
         </div>

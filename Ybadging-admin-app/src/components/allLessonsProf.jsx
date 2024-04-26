@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-const AllPastLessons = () => {
+const AllLessons = () => {
     const [lessons, setLessons] = useState([]);
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(["idLesson"]);
+    const [cookies, setCookie] = useCookies([""]);
 
     const goToLesson = (id) => {
       setCookie("idLesson", id, { path: "/" })
-      navigate("/Lesson");
+      navigate("/LessonProf");
     };
 
     useEffect(() => {
-        getLesson();
-      }, []);
+        getLesson(cookies.idUser);
+    }, []);
 
-    const getLesson = async () => {
+    const getLesson = async (idUser) => {
         await axios
           .get(
-            "http://localhost:3001/api/lessons/getLessons",{})
+            "http://localhost:3001/api/lessons/getLessonOnProf",{params:{id : idUser}})
           .then((response) => {
             if (!response.data.status) {
               console.log(response.data.error);
               return;
             }
-            setLessons(response.data.lessons)
-            console.log(lessons)
+            setLessons(trierParDate(response.data.lessons,('dateStart')))
           })
           .catch(function (error) {
             console.log(error);
@@ -55,16 +55,27 @@ const AllPastLessons = () => {
         return `${jour} ${mois} ${annee}`;
       }
 
+      function trierParDate(liste, dateKey) {
+        liste.sort((a, b) => {
+
+          const dateA = new Date(a[dateKey]);
+          const dateB = new Date(b[dateKey]);
+          return dateA - dateB;
+        });
+      
+        return liste;
+      }
+
     return (
         <body >
         <div>
-            <h1>PAST LESSON</h1>
+            <h1>LESSON</h1>
         </div>
         <article>
             <div>
                 {lessons.map(lesson => 
                 <div key={lesson.id}>
-                    {new Date(lesson.dateEnd)>new Date(Date.now())  ? 
+                    {new Date(lesson.dateEnd)>new Date(Date.now()) ? 
                         <div className="lesson">
                             <p>{`${lesson.name}`}</p>
                             <p>{`${formatDateFrDay(lesson.dateStart)} ${formatDateFrHours(lesson.dateStart)} - ${formatDateFrHours(lesson.dateEnd)}`}</p>
@@ -75,7 +86,11 @@ const AllPastLessons = () => {
                                 : 
                                 <></>
                             }
-                            <button onClick={() => goToLesson(lesson.id)}>See the lesson</button>
+                            {new Date(lesson.dateStart)<new Date(Date.now()) ? 
+                                <button onClick={() => goToLesson(lesson.id)}>See the lesson</button>
+                                : 
+                                <></>
+                            } 
                         </div>
                         : 
                         <></>
@@ -88,4 +103,4 @@ const AllPastLessons = () => {
     );
 };
 
-export default AllPastLessons;
+export default AllLessons;
