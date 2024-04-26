@@ -1,18 +1,39 @@
 import React from "react";
-import Lesson from "../componentsAdmin/lesson.jsx";
-import AllLessons from "../componentsAdmin/allLessons.jsx";
-import AllPastLessons from "../componentsAdmin/allPastLessons.jsx";
-import CreateLessons from "../componentsAdmin/createLesson.jsx";
-import CreateStudent from "../componentsAdmin/createStudent.jsx";
-import CreateProfessor from "../componentsAdmin/createProfessor.jsx";
-import CreateClassroom from "../componentsAdmin/createClassroom.jsx";
+import {Link} from "react-router-dom";
+import Lesson from "../components/lesson.jsx";
+import AllLessons from "../components/allLessons.jsx";
+import AllPastLessons from "../components/allPastLessons.jsx";
+import CreateLessons from "../components/createLesson.jsx";
+import CreateStudent from "../components/createStudent.jsx";
+import CreateProfessor from "../components/createProfessor.jsx";
+import CreateClassroom from "../components/createClassroom.jsx";
 
 const AdminPage = () => {
 
   return (
-    <body >
-      <AllLessons/>
-    </body>
+    <>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/CreateStudent">Create a student</Link>
+            </li>
+            <li>
+              <Link to="/CreateUser">Create a user</Link>
+            </li>
+            <li>
+              <Link to="/NextLesson">Next Lesson</Link>
+            </li>
+            <li>
+              <Link to="/PastLesson">Past Lesson</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <body >
+        <CreateLessons/>
+      </body>
+    </>
   );
 };
 

@@ -1,11 +1,14 @@
 import React from "react";
+import AllLessonProf from "../components/allLessonsProf.jsx";
 
 const ProfessorPage = () => {
 
   return (
-    <body >
-      <p>test de professor</p>
-    </body>
+    <>
+      <body >
+        <AllLessonProf/>
+      </body>
+    </>
   );
 };
 

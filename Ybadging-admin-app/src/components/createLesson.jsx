@@ -7,10 +7,10 @@ const CreateLessons = () => {
     const [lessonDate, setLessonDate] = useState("");
     const [lessonStart, setLessonStart] = useState("");
     const [lessonEnd, setLessonEnd] = useState("");
-    const [room, setRoom] = useState("");
-    const [promotion, setPromotion] = useState("");
-    const [professor1, setProfessor1] = useState("");
-    const [professor2, setprofessor2] = useState("");
+    const [idClassroom, setIdClassroom] = useState("");
+    const [idPromo, setIdPromo] = useState("");
+    const [idProfessor1, setIdProfessor1] = useState("");
+    const [idProfessor2, setIdProfessor2] = useState("");
     const [errorForm, setErrorForm] = useState(false);
 
     const [promos, setPromos] = useState([]);
@@ -77,13 +77,65 @@ const CreateLessons = () => {
     const handlesubmit = (e) => {
         e.preventDefault();
         
-        if (room=="" || professor1=="" || promotion==""){
+        if (idClassroom=="" || idProfessor1=="" || idPromo==""){
             console.log("test true")
             setErrorForm(true);
         } else {
-            setErrorForm(false);
+          
+            createLesson(lessonName,dateFormat(lessonStart,lessonDate),dateFormat(lessonEnd,lessonDate),idClassroom,idPromo)
         }
       };
+
+    function dateFormat(heure, jour) {
+        var [annee, mois, jour] = jour.split('-').map(Number);
+        var [heures, minutes] = heure.split(':').map(Number);
+        var date = new Date(annee, mois - 1, jour, heures, minutes);
+        
+        if (isNaN(date.getTime())) {
+            return null;
+        }
+        
+        // Formater la date combinée au format mm/dd/yyyy hh:mm:ss
+        var formattedDate = `${(mois < 10 ? '0' : '') + mois}/${(jour < 10 ? '0' : '') + jour}/${annee} ${(heures < 10 ? '0' : '') + heures}:${(minutes < 10 ? '0' : '') + minutes}:00`;
+        return formattedDate;
+    }
+
+    const createLesson = async (firstname,lastname,email,RFID,idPromo) => {
+        await axios
+        .post(
+            "http://localhost:3001/api/lessons/add",{name: firstname, date_start: lastname, date_end: email, id_classroom:RFID, id_promo:idPromo})
+        .then((response) => {
+            if (!response.data.status) {
+                console.log(response.data.error);
+                return;
+            }
+            createLessonProf(idProfessor1,response.data.lessonId)
+            if (idProfessor2 != ""){
+              createLessonProf(idProfessor2,response.data.lessonId)
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            return;
+        });
+    };
+
+    const createLessonProf = async (idProf,lessonId) => {
+      await axios
+      .post(
+          "http://localhost:3001/api/userLesson/add",{userId: idProf, lessonId: lessonId})
+      .then((response) => {
+          if (!response.data.status) {
+              console.log(response.data.error);
+              return;
+          }
+          console.log("test reussit")
+      })
+      .catch(function (error) {
+          console.log(error);
+          return;
+      });
+  };
 
     return (
         <body >
@@ -137,14 +189,14 @@ const CreateLessons = () => {
                         <label>
                             Select a room : 
                             <select name="room" 
-                            value={room}
+                            value={idClassroom}
                             onChange={(e) => {
-                              setRoom(e.target.value);
+                              setIdClassroom(e.target.value);
                             }}
                             required>
                                 <option value="">Choose a room</option>
                                 {classroom.map((classroom) => (
-                                    <option key={classroom.id} value={classroom.name}>
+                                    <option key={classroom.id} value={classroom.id}>
                                         {classroom.name}
                                     </option>
                                 ))}
@@ -153,14 +205,14 @@ const CreateLessons = () => {
                         <label>
                             Select a promotion : 
                             <select name="promotion" 
-                            value={promotion}
+                            value={idPromo}
                             onChange={(e) => {
-                              setPromotion(e.target.value);
+                              setIdPromo(e.target.value);
                             }}
                             required>
                                 <option value="">Choose a promotion</option>
                                 {promos.map((promos) => (
-                                    <option key={promos.id} value={promos.name}>
+                                    <option key={promos.id} value={promos.id}>
                                         {promos.name}
                                     </option>
                                 ))}
@@ -172,9 +224,9 @@ const CreateLessons = () => {
                 <label>
                     Professor : 
                     <select name="professor1" 
-                    value={professor1}
+                    value={idProfessor1}
                     onChange={(e) => {
-                      setProfessor1(e.target.value);
+                      setIdProfessor1(e.target.value);
                     }}
                     required>
                         <option value="">Choose a professor</option>
@@ -188,9 +240,9 @@ const CreateLessons = () => {
                 <label>
                     Professor (optional) : 
                     <select name="professor2"
-                    value={professor2}
+                    value={idProfessor2}
                     onChange={(e) => {
-                      setprofessor2(e.target.value);
+                      setIdProfessor2(e.target.value);
                     }}>
                         <option value="">Choose a professor</option>
                         {professor.map((professor) => (

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 const CreateStudent = () => {
 
@@ -6,20 +8,60 @@ const CreateStudent = () => {
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [RFID, setRFID] = useState("");
-    const [promo, setPromo] = useState("");
+    const [idPromo, setIdPromo] = useState("");
     const [errorForm, setErrorForm] = useState("");
+
+    const [promos, setPromos] = useState([]);
+
+    useEffect(() => {
+        getPromo();
+      }, []);
+
+    const getPromo = async () => {
+        await axios
+          .get(
+            "http://localhost:3001/api/promos/",{})
+          .then((response) => {
+            if (!response.data.status) {
+              console.log(response.data.error);
+              return;
+            }
+            setPromos(response.data.promos)
+          })
+          .catch(function (error) {
+            console.log(error);
+            return;
+          });
+    };
 
     const handlesubmit = (e) => {
         e.preventDefault();
-        if (firstname=="" || lastname=="" || email=="" || RFID=="" || promo==""){
+        if (firstname=="" || lastname=="" || email=="" || RFID=="" || idPromo==""){
             setErrorForm(true);
         } else {
-            
+            createStudent(firstname,lastname,email,RFID,idPromo)
         }
-      };
+    };
+
+    const createStudent = async (firstname,lastname,email,RFID,idPromo) => {
+        await axios
+        .post(
+            "http://localhost:3001/api/students/add",{firstname: firstname, lastname: lastname, email: email, RFID:RFID, idPromo:idPromo})
+        .then((response) => {
+            if (!response.data.status) {
+                console.log(response.data.error);
+                return;
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            return;
+        });
+    };
 
     return (
         <body >
+            <Link to="/Admin">Home</Link>
         <div>
             <h1>CREATE A STUDENT</h1>
         </div>
@@ -54,13 +96,20 @@ const CreateStudent = () => {
                     required/>
                 </label>
                 <label>
-                    Promo
-                    <input type="text" name="promo" 
-                    value={promo}
+                    Promo 
+                    <select name="idPromo" 
+                    value={idPromo}
                     onChange={(e) => {
-                      setPromo(e.target.value);
+                        setIdPromo(e.target.value);
                     }}
-                    required/>
+                    required>
+                        <option value="">Choose a promo</option>
+                        {promos.map((promo) => (
+                            <option key={promo.id} value={promo.id}>
+                                {promo.name} {promo.grade}
+                            </option>
+                        ))}
+                    </select>
                 </label>
                 <label>
                     RFID
