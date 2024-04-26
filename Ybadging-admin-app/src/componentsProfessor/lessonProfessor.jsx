@@ -1,7 +1,7 @@
 import React from "react";
 
-const Lesson = () => {
-    const data = [{id:0, name: "John Doe", status: 0}, {id:1, name:"Jane Doe", status: 1}]
+const LessonProfessor = () => {
+    const data = [{id:0, firstname: "John", lastname: "Doe", status: 0}, {id:1, firstname: "Jane", lastname: "Doe", status: 1}]
     return (
         <body >
         <div>
@@ -34,4 +34,4 @@ const Lesson = () => {
     );
 };
 
-export default Lesson;
+export default LessonProfessor;

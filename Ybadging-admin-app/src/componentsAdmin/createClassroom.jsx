@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CreateStudent = () => {
+const CreateClassroom = () => {
 
     const [name, setName] = useState(""); 
     const [errorForm, setErrorForm] = useState("");
@@ -45,4 +45,4 @@ const CreateStudent = () => {
     );
 };
 
-export default CreateStudent;
+export default CreateClassroom;

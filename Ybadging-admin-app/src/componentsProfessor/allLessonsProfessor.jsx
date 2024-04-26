@@ -1,15 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const AllLessons = () => {
+const AllLessonsProfessor = () => {
     const lessons = [{id:0, name: "UX Design", dateStart:"2024-04-22 13:00:00.000", dateEnd:"2024-04-23 17:00:00.000",namePromo:"info1",nameClassroom:"201", professor1:"John Doe", professor2:"Jane Doe"}, {id:1, name: "Data", dateStart:"2020-05-23 15:00:00.000", dateEnd:"2020-05-23 17:00:00.000",namePromo:"info2",nameClassroom:"201", professor1:"John Doe", professor2:"Jane Doe"}]
     const navigate = useNavigate();
 
     const goToLesson = () => {
         navigate("/Lesson");
-    };
-
-    const deleteLesson = () => {
     };
 
     return (
@@ -33,7 +30,6 @@ const AllLessons = () => {
                                 : 
                                 <></>
                             } 
-                            <button onClick={deleteLesson}>Delete the lesson</button>
                         </div>
                         : 
                         <></>
@@ -46,4 +42,4 @@ const AllLessons = () => {
     );
 };
 
-export default AllLessons;
+export default AllLessonsProfessor;

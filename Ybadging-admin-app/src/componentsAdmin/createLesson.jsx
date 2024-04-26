@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 const CreateLessons = () => {
     const [lessonName, setLessonName] = useState("");
@@ -11,9 +13,66 @@ const CreateLessons = () => {
     const [professor2, setprofessor2] = useState("");
     const [errorForm, setErrorForm] = useState(false);
 
-    const listRoom = ['101', '102','201', '202', '203', '204', '301', '302', '303', '304'];
-    const listPromo = ['Archi 1', 'Archi 2','Archi 3', 'Info 1', 'Info 2', 'Info 3'];
-    const listProf = ['Kay', 'Orochimaru','luffy', 'Natsu', 'Jiraya', 'Leo'];
+    const [promos, setPromos] = useState([]);
+    const [classroom, setClassroom] = useState([]);
+    const [professor, setProfessor] = useState([]);
+
+    useEffect(() => {
+        getClassroom();
+        getProfessor();
+        getPromo();
+      }, []);
+
+    const getPromo = async () => {
+        await axios
+          .get(
+            "http://localhost:3001/api/promos/",{})
+          .then((response) => {
+            if (!response.data.status) {
+              console.log(response.data.error);
+              return;
+            }
+            setPromos(response.data.promos)
+          })
+          .catch(function (error) {
+            console.log(error);
+            return;
+          });
+      };
+
+      const getClassroom = async () => {
+        await axios
+          .get(
+            "http://localhost:3001/api/classroom/",{})
+          .then((response) => {
+            if (!response.data.status) {
+              console.log(response.data.error);
+              return;
+            }
+            setClassroom(response.data.classrooms)
+          })
+          .catch(function (error) {
+            console.log(error);
+            return;
+          });
+      };
+
+      const getProfessor = async () => {
+        await axios
+          .get(
+            "http://localhost:3001/api/user/professor",{})
+          .then((response) => {
+            if (!response.data.status) {
+              console.log(response.data.error);
+              return;
+            }
+            setProfessor(response.data.professors)
+          })
+          .catch(function (error) {
+            console.log(error);
+            return;
+          });
+      };
 
     const handlesubmit = (e) => {
         e.preventDefault();
@@ -22,6 +81,7 @@ const CreateLessons = () => {
             console.log("test true")
             setErrorForm(true);
         } else {
+            setErrorForm(false);
         }
       };
 
@@ -83,9 +143,9 @@ const CreateLessons = () => {
                             }}
                             required>
                                 <option value="">Choose a room</option>
-                                {listRoom.map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
+                                {classroom.map((classroom) => (
+                                    <option key={classroom.id} value={classroom.name}>
+                                        {classroom.name}
                                     </option>
                                 ))}
                             </select>
@@ -99,9 +159,9 @@ const CreateLessons = () => {
                             }}
                             required>
                                 <option value="">Choose a promotion</option>
-                                {listPromo.map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
+                                {promos.map((promos) => (
+                                    <option key={promos.id} value={promos.name}>
+                                        {promos.name}
                                     </option>
                                 ))}
                             </select>
@@ -118,9 +178,9 @@ const CreateLessons = () => {
                     }}
                     required>
                         <option value="">Choose a professor</option>
-                        {listProf.map((option, index) => (
-                            <option key={index} value={option}>
-                                {option}
+                        {professor.map((professor) => (
+                            <option key={professor.id} value={professor.id}>
+                                {`${professor.firstname} ${professor.lastname}`}
                             </option>
                         ))}
                     </select>
@@ -133,9 +193,9 @@ const CreateLessons = () => {
                       setprofessor2(e.target.value);
                     }}>
                         <option value="">Choose a professor</option>
-                        {listProf.map((option, index) => (
-                            <option key={index} value={option}>
-                                {option}
+                        {professor.map((professor) => (
+                            <option key={professor.id} value={professor.id}>
+                                {`${professor.firstname} ${professor.lastname}`}
                             </option>
                         ))}
                     </select>
