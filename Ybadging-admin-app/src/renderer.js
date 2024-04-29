@@ -31,3 +31,4 @@ import './assets/index.css';
 import './assets/allLesson.css';
 import './assets/oneLesson.css';
 import './assets/connection.css';
+import './assets/navbar.css';

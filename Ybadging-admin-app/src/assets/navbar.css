@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.navbarLeft{
+    margin-left: -5vw;
+    display: flex;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.link{
+    color: black;
+}
+.link:hover{
+    color: rgb(58, 58, 58);
+}
+
+li{
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    text-wrap: nowrap;
+    margin-left: 2vw;
+}
+
+.navbarRight{
+    margin-left: 5vw;
+    text-wrap: nowrap;
+    display: flex;
+}
+
+.DisconnectButton{
+    margin-left: 2vw;
+    background-color: #B0B9A8;
+    color: #000000; 
+    border: 1px solid; 
+    padding: 0px 10px; 
+    font-size: 16px; 
+    cursor: pointer;
+    border-radius: 5px; 
+    margin-right: 1vw;
+}
+
+.DisconnectButton:hover {
+    background-color: #777c72;
+}

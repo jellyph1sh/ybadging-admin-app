@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import NavbarProfessorHome from "./navbarProfessorHome.jsx";
 
 const AllLessons = () => {
     const [lessons, setLessons] = useState([]);
@@ -68,6 +69,7 @@ const AllLessons = () => {
 
     return (
         <body >
+          <NavbarProfessorHome/>
         <div>
             <h1>LESSON</h1>
         </div>

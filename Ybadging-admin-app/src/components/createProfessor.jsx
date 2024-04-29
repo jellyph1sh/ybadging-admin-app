@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import NavbarAdmin from "./navbarAdmin.jsx";
 
 const CreateProfessor = () => {
 
@@ -53,7 +54,7 @@ const CreateProfessor = () => {
 
     return (
         <body >
-            <Link to="/Admin">Home</Link>
+             <NavbarAdmin/>
         <div>
             <h1>CREATE A PROFESSOR</h1>
         </div>

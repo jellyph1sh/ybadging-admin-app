@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import NavbarAdmin from "./navbarAdmin.jsx";
 
 const CreateStudent = () => {
 
@@ -78,8 +79,9 @@ const CreateStudent = () => {
     };
 
     return (
+        
         <body >
-            <Link to="/Admin">Home</Link>
+             <NavbarAdmin/>
         <div>
             <h1>CREATE A STUDENT</h1>
         </div>

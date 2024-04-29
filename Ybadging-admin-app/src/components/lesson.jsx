@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { CookiesProvider, useCookies } from "react-cookie";
+import NavbarAdmin from "./navbarAdmin.jsx";
 
 const Lesson = () => {
     const [cookies] = useCookies(["idLesson"]);
@@ -101,7 +102,7 @@ const Lesson = () => {
 
     return (
     <body >
-        <Link to="/Admin">Home</Link>
+        <NavbarAdmin/>
         {lesson.map(data => 
         <div className="HeaderLessonCard" key={data.id}>
             <div>

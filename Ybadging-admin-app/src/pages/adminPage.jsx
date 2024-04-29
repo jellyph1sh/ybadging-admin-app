@@ -6,29 +6,13 @@ import AllPastLessons from "../components/allPastLessons.jsx";
 import CreateLessons from "../components/createLesson.jsx";
 import CreateStudent from "../components/createStudent.jsx";
 import CreateProfessor from "../components/createProfessor.jsx";
+import NavbarAdminHome from "../components/navbarAdminHome.jsx"
 
 const AdminPage = () => {
 
   return (
     <>
-      <header>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/CreateStudent">Create a student</Link>
-            </li>
-            <li>
-              <Link to="/CreateUser">Create a user</Link>
-            </li>
-            <li>
-              <Link to="/NextLesson">Next Lesson</Link>
-            </li>
-            <li>
-              <Link to="/PastLesson">Past Lesson</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <NavbarAdminHome/>
       <body >
         <CreateLessons/>
       </body>
