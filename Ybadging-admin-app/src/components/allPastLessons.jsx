@@ -72,7 +72,7 @@ const AllPastLessons = () => {
     return (
         <body >
            <NavbarAdmin/>
-        <div>
+        <div className="title">
             <h1>PAST LESSON</h1>
         </div>
         <article>

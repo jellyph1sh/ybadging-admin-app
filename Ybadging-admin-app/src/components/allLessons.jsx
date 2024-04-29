@@ -93,7 +93,7 @@ const AllLessons = () => {
     return (
         <body >
            <NavbarAdmin/>
-        <div>
+        <div className="title">
             <h1>LESSON</h1>
         </div>
         <article>

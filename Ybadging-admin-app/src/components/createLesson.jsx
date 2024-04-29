@@ -14,6 +14,7 @@ const CreateLessons = () => {
 
     const [errorForm, setErrorForm] = useState(false);
     const [validForm, setValidForm] = useState(false);
+    const [errorDateForm, setErrorDateForm] = useState(false);
 
     const [promos, setPromos] = useState([]);
     const [classroom, setClassroom] = useState([]);
@@ -81,7 +82,13 @@ const CreateLessons = () => {
         
         if (idClassroom=="" || idProfessor1=="" || idPromo==""){
             setErrorForm(true);
-            setValidForm(false)
+            setValidForm(false);
+            setErrorDateForm(false);
+        }
+        else if (new Date(dateFormat(lessonStart,lessonDate))<new Date(Date.now()) == true || new Date(dateFormat(lessonEnd,lessonDate))<new Date(Date.now()) == true || new Date(dateFormat(lessonEnd,lessonDate))<new Date(dateFormat(lessonStart,lessonDate)) == true){
+          setErrorForm(false);
+          setValidForm(false);
+          setErrorDateForm(true);
         } else {
             createLesson(lessonName,dateFormat(lessonStart,lessonDate),dateFormat(lessonEnd,lessonDate),idClassroom,idPromo)
             setLessonName("");
@@ -145,15 +152,18 @@ const CreateLessons = () => {
           if (!response.data.status) {
               console.log(response.data.error);
               setErrorForm(true);
-              setValidForm(false)
+              setValidForm(false);
+              setErrorDateForm(false);
               return;
           }
           setErrorForm(false);
-          setValidForm(true)
+          setErrorDateForm(false);
+          setValidForm(true);
       })
       .catch(function (error) {
           setErrorForm(true);
-          setValidForm(false)
+          setValidForm(false);
+          setErrorDateForm(false);
           console.log(error);
           return;
       });
@@ -161,14 +171,13 @@ const CreateLessons = () => {
 
     return (
         <body >
-        <div>
+        <div className="title">
             <h1>CREATE A LESSON</h1>
         </div>
         <main>
             <form>
-                <div>
                 <label>
-                    Lesson Name
+                    Lesson Name : 
                     <input type="text" name="lessonName" 
                     value={lessonName}
                     onChange={(e) => {
@@ -176,73 +185,68 @@ const CreateLessons = () => {
                     }}
                     required/>
                 </label>
-                </div>
-                <div>
-                    <div>
-                        <label>
-                            Date :
-                            <input type="date" name="lessonDate" 
-                            value={lessonDate}
-                            onChange={(e) => {
-                              setLessonDate(e.target.value);
-                            }}
-                            required/>
-                        </label>
-                        <label>
-                            Start at :
-                            <input type="time" name="lessonStart" min="07:00" max="21:00" 
-                            value={lessonStart}
-                            onChange={(e) => {
-                              setLessonStart(e.target.value);
-                            }}
-                            required />
-                        </label>
-                        <label>
-                            End at :
-                            <input type="time" name="lessonEnd" min="07:00" max="21:00" 
-                            value={lessonEnd}
-                            onChange={(e) => {
-                              setLessonEnd(e.target.value);
-                            }}
-                            required/>
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                            Select a room : 
-                            <select name="room" 
-                            value={idClassroom}
-                            onChange={(e) => {
-                              setIdClassroom(e.target.value);
-                            }}
-                            required>
-                                <option value="">Choose a room</option>
-                                {classroom.map((classroom) => (
-                                    <option key={classroom.id} value={classroom.id}>
-                                        {classroom.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                        <label>
-                            Select a promotion : 
-                            <select name="promotion" 
-                            value={idPromo}
-                            onChange={(e) => {
-                              setIdPromo(e.target.value);
-                            }}
-                            required>
-                                <option value="">Choose a promotion</option>
-                                {promos.map((promos) => (
-                                    <option key={promos.id} value={promos.id}>
-                                        {promos.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-                </div>
-                <div>
+        
+                <label>
+                    Date : 
+                    <input type="date" name="lessonDate" 
+                    value={lessonDate}
+                    onChange={(e) => {
+                      setLessonDate(e.target.value);
+                    }}
+                    required/>
+                </label>
+                <label>
+                    Start at : 
+                    <input type="time" name="lessonStart" min="07:00" max="21:00" 
+                    value={lessonStart}
+                    onChange={(e) => {
+                      setLessonStart(e.target.value);
+                    }}
+                    required />
+                </label>
+                <label>
+                    End at : 
+                    <input type="time" name="lessonEnd" min="07:00" max="21:00" 
+                    value={lessonEnd}
+                    onChange={(e) => {
+                      setLessonEnd(e.target.value);
+                    }}
+                    required/>
+                </label>
+      
+                <label>
+                    Select a room : 
+                    <select name="room" 
+                    value={idClassroom}
+                    onChange={(e) => {
+                      setIdClassroom(e.target.value);
+                    }}
+                    required>
+                        <option value="">Choose a room</option>
+                        {classroom.map((classroom) => (
+                            <option key={classroom.id} value={classroom.id}>
+                                {classroom.name}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    Select a promotion : 
+                    <select name="promotion" 
+                    value={idPromo}
+                    onChange={(e) => {
+                      setIdPromo(e.target.value);
+                    }}
+                    required>
+                        <option value="">Choose a promotion</option>
+                        {promos.map((promos) => (
+                            <option key={promos.id} value={promos.id}>
+                                {promos.name} {promos.grade}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
                 <label>
                     Professor : 
                     <select name="professor1" 
@@ -274,14 +278,19 @@ const CreateLessons = () => {
                         ))}
                     </select>
                 </label>
-                </div>
+            
                 {errorForm==true ? 
-                    <div>one field is empty</div>
+                    <div  className="errorMessage">One field is empty</div>
+                    : 
+                    <></>
+                }
+                {errorDateForm==true ? 
+                    <div className="errorMessage">A Date is wrong</div>
                     : 
                     <></>
                 }
                 {validForm==true ? 
-                    <div>Lesson created</div>
+                    <div  className="validMessage">Lesson created</div>
                     : 
                     <></>
                 }

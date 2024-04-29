@@ -55,14 +55,13 @@ const CreateProfessor = () => {
     return (
         <body >
              <NavbarAdmin/>
-        <div>
+        <div className="title">
             <h1>CREATE A PROFESSOR</h1>
         </div>
         <main>
             <form>
-                <div>
                 <label>
-                    Firstname
+                    Firstname : 
                     <input type="text" name="firstname" 
                     value={firstname}
                     onChange={(e) => {
@@ -71,7 +70,7 @@ const CreateProfessor = () => {
                     required/>
                 </label>
                 <label>
-                    Lastname
+                    Lastname : 
                     <input type="text" name="lastname" 
                     value={lastname}
                     onChange={(e) => {
@@ -80,8 +79,8 @@ const CreateProfessor = () => {
                     required/>
                 </label>
                 <label>
-                    E-mail
-                    <input type="text" name="email" 
+                    E-mail : 
+                    <input type="email" name="email" 
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -89,7 +88,7 @@ const CreateProfessor = () => {
                     required/>
                 </label>
                 <label>
-                    Password
+                    Password : 
                     <input type="text" name="password" 
                     value={password}
                     onChange={(e) => {
@@ -99,18 +98,17 @@ const CreateProfessor = () => {
                 </label>
 
                 {errorForm==true ? 
-                    <div>one field is empty</div>
+                    <div className="errorMessage">one field is empty</div>
                     : 
                     <></>
                 }
                 {validForm==true ? 
-                    <div>The professor account is created</div>
+                    <div className="validMessage">The professor account is created</div>
                     : 
                     <></>
                 }
                 <button onClick={handlesubmit}>create</button>
                 
-                </div>
             </form>
         </main>
         </body>

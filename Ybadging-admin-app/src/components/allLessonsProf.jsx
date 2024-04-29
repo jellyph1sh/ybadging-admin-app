@@ -70,7 +70,7 @@ const AllLessons = () => {
     return (
         <body >
           <NavbarProfessorHome/>
-        <div>
+        <div className="title">
             <h1>LESSON</h1>
         </div>
         <article>

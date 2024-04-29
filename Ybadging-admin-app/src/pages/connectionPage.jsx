@@ -58,8 +58,8 @@ const Connection = () => {
     <body >
       <form className="form">
           <label>
-            E-mail
-            <input type="mail" name="email" 
+            E-mail : 
+            <input type="email" name="email" 
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -67,7 +67,7 @@ const Connection = () => {
             required/>
           </label>
           <label>
-            Password
+            Password : 
             <input type="password" name="password" 
             value={password}
             onChange={(e) => {
@@ -80,7 +80,7 @@ const Connection = () => {
               : 
               <></>
           }
-        <button onClick={handlesubmit}>Create</button>
+        <button onClick={handlesubmit}>Login</button>
       </form>
       <button><Link to="/Admin" >Go to admin</Link></button>
       <button><Link to="/Professor" >Go to professor</Link></button>
