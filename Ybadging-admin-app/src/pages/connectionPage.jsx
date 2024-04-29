@@ -15,9 +15,6 @@ const Connection = () => {
   const [error, setError] = useState(false);
 
   const [permission, setPermission] = useState(-1);
-  // const [idUser, setIdUser] = useState("");
-  // const [idFirsname, setIdFirsname] = useState("");
-  // const [idLastname, setIdLastname] = useState("");
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -44,11 +41,6 @@ const Connection = () => {
         setCookie("permission", parseInt(response.data.user.permission), { path: "/",expires: now })
         setCookie("firstname", response.data.user.firstname, { path: "/",expires: now })
         setCookie("lastname", response.data.user.lastname, { path: "/",expires: now })
-        setPermission(parseInt(response.data.user.permission))
-
-        console.log(parseInt(response.data.user.permission))
-        console.log(parseInt(response.data.user.permission)==1)
-        console.log(parseInt(response.data.user.permission)==0)
         if (parseInt(response.data.user.permission)==0){
           navigate("/Admin");
         } else if (parseInt(response.data.user.permission)==1) {
@@ -64,10 +56,10 @@ const Connection = () => {
 
   return (
     <body >
-      <form class="form">
+      <form className="form">
           <label>
-            E-mail
-            <input type="mail" name="email" 
+            E-mail : 
+            <input type="email" name="email" 
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -75,7 +67,7 @@ const Connection = () => {
             required/>
           </label>
           <label>
-            Password
+            Password : 
             <input type="password" name="password" 
             value={password}
             onChange={(e) => {
@@ -88,7 +80,7 @@ const Connection = () => {
               : 
               <></>
           }
-        <button onClick={handlesubmit}>Create</button>
+        <button onClick={handlesubmit}>Login</button>
       </form>
       <button><Link to="/Admin" >Go to admin</Link></button>
       <button><Link to="/Professor" >Go to professor</Link></button>

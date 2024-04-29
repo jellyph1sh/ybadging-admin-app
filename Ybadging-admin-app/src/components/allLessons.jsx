@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import NavbarAdmin from "./navbarAdmin.jsx";
 
 const AllLessons = () => {
     const [lessons, setLessons] = useState([]);
@@ -15,12 +16,31 @@ const AllLessons = () => {
     };
 
     const deleteLesson = (id) => {
-            //
+      deleteLessonReq(id)
     };
 
     useEffect(() => {
         getLesson();
     }, []);
+
+    const deleteLessonReq = async (id) => {
+      await axios
+        .delete(
+          "http://localhost:3001/api/lessons/",{params:{idLesson : id}})
+        .then((response) => {
+          if (!response.data.status) {
+            console.log(response.data.error);
+
+            return;
+          }
+          getLesson();
+        })
+        
+        .catch(function (error) {
+          console.log(error);
+          return;
+        });
+    };
 
     const getLesson = async () => {
         await axios
@@ -72,8 +92,8 @@ const AllLessons = () => {
 
     return (
         <body >
-          <Link to="/Admin">Home</Link>
-        <div>
+           <NavbarAdmin/>
+        <div className="title">
             <h1>LESSON</h1>
         </div>
         <article>
@@ -81,22 +101,23 @@ const AllLessons = () => {
                 {lessons.map(lesson => 
                 <div key={lesson.id}>
                     {new Date(lesson.dateEnd)>new Date(Date.now()) ? 
-                        <div className="lesson">
-                            <p>{`${lesson.name}`}</p>
-                            <p>{`${formatDateFrDay(lesson.dateStart)} ${formatDateFrHours(lesson.dateStart)} - ${formatDateFrHours(lesson.dateEnd)}`}</p>
-                            <p>{`${lesson.namePromo} - ${lesson.nameClassroom}`}</p> 
-                            <p>{`${lesson.professor1} `}</p> 
+                        <div className="lessonCardList">
+                            <h2>{`${lesson.name}`}</h2>
+                            <h3>{`${formatDateFrDay(lesson.dateStart)} ${formatDateFrHours(lesson.dateStart)} - ${formatDateFrHours(lesson.dateEnd)}`}</h3>
+                            <h3>{`${lesson.namePromo}`}</h3>
+                            <h3>{`Classroom : ${lesson.nameClassroom}`}</h3>  
+                            <h3>{`Professor : ${lesson.professor1} `}</h3> 
                             {lesson.professor2 != null ? 
-                                <p>{`- ${lesson.professor2}`}</p>
+                                <h3>{`Professor : ${lesson.professor2}`}</h3>
                                 : 
                                 <></>
                             }
                             {new Date(lesson.dateStart)<new Date(Date.now()) ? 
-                                <button onClick={() => goToLesson(lesson.id)}>See the lesson</button>
+                                <button className="goToLessonButton" onClick={() => goToLesson(lesson.id)}>See the lesson</button>
                                 : 
                                 <></>
                             } 
-                            <button onClick={() => deleteLesson(lesson.id)}>Delete the lesson</button>
+                            <button className="deleteLessonButton" onClick={() => deleteLesson(lesson.id)}>Delete the lesson</button>
                         </div>
                         : 
                         <></>

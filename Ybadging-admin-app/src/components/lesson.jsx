@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { CookiesProvider, useCookies } from "react-cookie";
+import NavbarAdmin from "./navbarAdmin.jsx";
 
 const Lesson = () => {
     const [cookies] = useCookies(["idLesson"]);
@@ -100,17 +101,16 @@ const Lesson = () => {
     };
 
     return (
-        <body >
-            <Link to="/Admin">Home</Link>
+    <body >
+        <NavbarAdmin/>
         {lesson.map(data => 
-        <div key={data.id}>
+        <div className="HeaderLessonCard" key={data.id}>
             <div>
                 <h1>{`${data.name}`}</h1>
             </div>
-            <div>
-                <h3>{`Room : ${data.nameClassroom}`} </h3>
-                <h3>{`${formatDateFrDay(data.dateStart)} ${formatDateFrHours(data.dateStart)} - ${formatDateFrHours(data.dateEnd)}`}</h3>
-            </div>
+            <h3>{`Promotion : ${data.namePromo}`} </h3>
+            <h3>{`Room : ${data.nameClassroom}`} </h3>
+            <h3>{`${formatDateFrDay(data.dateStart)} ${formatDateFrHours(data.dateStart)} - ${formatDateFrHours(data.dateEnd)}`}</h3>
             </div>
         )}
         <article>
@@ -120,19 +120,19 @@ const Lesson = () => {
                         {student.status==true ? 
                             <div className="studentPresent">
                                 <p>{`${student.firstname} ${student.lastname}, Present`}</p>
-                                <button onClick={() => changeStatus(student.status, student.id)}>Absent</button> 
+                                <button className="absenceButton" onClick={() => changeStatus(student.status, student.id)}>Absent</button> 
                             </div>
                             : 
                             <div className="studentAbsent">
                                 <p>{`${student.firstname} ${student.lastname}, Absent`}</p>
-                            <   button onClick={() => changeStatus(student.status, student.id)}>Present</button>
+                            <   button className="presenceButton" onClick={() => changeStatus(student.status, student.id)}>Present</button>
                             </div>
                         }
                     </div>
                 )} 
             </div>
         </article>
-        </body>
+    </body>
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import NavbarAdmin from "./navbarAdmin.jsx";
 
 const CreateStudent = () => {
 
@@ -78,16 +79,16 @@ const CreateStudent = () => {
     };
 
     return (
+        
         <body >
-            <Link to="/Admin">Home</Link>
-        <div>
+             <NavbarAdmin/>
+        <div className="title">
             <h1>CREATE A STUDENT</h1>
         </div>
         <main>
             <form>
-                <div>
                 <label>
-                    Firstname
+                    Firstname : 
                     <input type="text" name="firstname" 
                     value={firstname}
                     onChange={(e) => {
@@ -96,7 +97,7 @@ const CreateStudent = () => {
                     required/>
                 </label>
                 <label>
-                    Lastname
+                    Lastname : 
                     <input type="text" name="lastname" 
                     value={lastname}
                     onChange={(e) => {
@@ -105,8 +106,8 @@ const CreateStudent = () => {
                     required/>
                 </label>
                 <label>
-                    E-mail
-                    <input type="text" name="email" 
+                    E-mail : 
+                    <input type="email" name="email" 
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -114,7 +115,7 @@ const CreateStudent = () => {
                     required/>
                 </label>
                 <label>
-                    Promo 
+                    Promo : 
                     <select name="idPromo" 
                     value={idPromo}
                     onChange={(e) => {
@@ -130,7 +131,7 @@ const CreateStudent = () => {
                     </select>
                 </label>
                 <label>
-                    RFID
+                    RFID : 
                     <input type="text" name="RFID" 
                     value={RFID}
                     onChange={(e) => {
@@ -139,18 +140,17 @@ const CreateStudent = () => {
                     required/>
                 </label>
                 {errorForm==true ? 
-                    <div>one field is empty</div>
+                    <div  className="errorMessage">one field is empty</div>
                     : 
                     <></>
                 }
                 {validForm==true ? 
-                    <div>The student is created</div>
+                    <div  className="validMessage">The student is created</div>
                     : 
                     <></>
                 }
                 <button onClick={handlesubmit}>create</button>
-                
-                </div>
+
             </form>
         </main>
         </body>
