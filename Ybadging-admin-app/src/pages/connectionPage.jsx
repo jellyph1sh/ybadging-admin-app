@@ -56,7 +56,7 @@ const Connection = () => {
 
   return (
     <body >
-      <form class="form">
+      <form className="form">
           <label>
             E-mail
             <input type="mail" name="email" 

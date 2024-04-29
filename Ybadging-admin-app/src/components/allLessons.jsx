@@ -16,12 +16,31 @@ const AllLessons = () => {
     };
 
     const deleteLesson = (id) => {
-            //
+      deleteLessonReq(id)
     };
 
     useEffect(() => {
         getLesson();
     }, []);
+
+    const deleteLessonReq = async (id) => {
+      await axios
+        .delete(
+          "http://localhost:3001/api/lessons/",{params:{idLesson : id}})
+        .then((response) => {
+          if (!response.data.status) {
+            console.log(response.data.error);
+
+            return;
+          }
+          getLesson();
+        })
+        
+        .catch(function (error) {
+          console.log(error);
+          return;
+        });
+    };
 
     const getLesson = async () => {
         await axios
