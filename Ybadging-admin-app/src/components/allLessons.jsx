@@ -81,22 +81,23 @@ const AllLessons = () => {
                 {lessons.map(lesson => 
                 <div key={lesson.id}>
                     {new Date(lesson.dateEnd)>new Date(Date.now()) ? 
-                        <div className="lesson">
-                            <p>{`${lesson.name}`}</p>
-                            <p>{`${formatDateFrDay(lesson.dateStart)} ${formatDateFrHours(lesson.dateStart)} - ${formatDateFrHours(lesson.dateEnd)}`}</p>
-                            <p>{`${lesson.namePromo} - ${lesson.nameClassroom}`}</p> 
-                            <p>{`${lesson.professor1} `}</p> 
+                        <div className="lessonCardList">
+                            <h2>{`${lesson.name}`}</h2>
+                            <h3>{`${formatDateFrDay(lesson.dateStart)} ${formatDateFrHours(lesson.dateStart)} - ${formatDateFrHours(lesson.dateEnd)}`}</h3>
+                            <h3>{`${lesson.namePromo}`}</h3>
+                            <h3>{`Classroom : ${lesson.nameClassroom}`}</h3>  
+                            <h3>{`Professor : ${lesson.professor1} `}</h3> 
                             {lesson.professor2 != null ? 
-                                <p>{`- ${lesson.professor2}`}</p>
+                                <h3>{`Professor : ${lesson.professor2}`}</h3>
                                 : 
                                 <></>
                             }
                             {new Date(lesson.dateStart)<new Date(Date.now()) ? 
-                                <button onClick={() => goToLesson(lesson.id)}>See the lesson</button>
+                                <button className="goToLessonButton" onClick={() => goToLesson(lesson.id)}>See the lesson</button>
                                 : 
                                 <></>
                             } 
-                            <button onClick={() => deleteLesson(lesson.id)}>Delete the lesson</button>
+                            <button className="deleteLessonButton" onClick={() => deleteLesson(lesson.id)}>Delete the lesson</button>
                         </div>
                         : 
                         <></>

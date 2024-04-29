@@ -1,0 +1,57 @@
+.HeaderLessonCard {
+    display: block;
+    text-align: center;
+    align-items: center;
+}
+
+.studentPresent {  
+    margin-top: 4px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: #66cf70; 
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+
+.studentAbsent {
+    margin-top: 4px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: #ff6347;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+
+.absenceButton{
+    background-color: #ff6347;
+    color: #000000;
+    border: none; 
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px; 
+}
+
+.absenceButton:hover {
+    background-color: #cc4c3c;
+}
+
+.presenceButton{
+    background-color: #66cf70; 
+    color: #000000; 
+    border: none; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+}
+
+.presenceButton:hover {
+    background-color: rgb(65, 189, 80);
+}

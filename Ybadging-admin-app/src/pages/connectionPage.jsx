@@ -15,9 +15,6 @@ const Connection = () => {
   const [error, setError] = useState(false);
 
   const [permission, setPermission] = useState(-1);
-  // const [idUser, setIdUser] = useState("");
-  // const [idFirsname, setIdFirsname] = useState("");
-  // const [idLastname, setIdLastname] = useState("");
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -44,11 +41,6 @@ const Connection = () => {
         setCookie("permission", parseInt(response.data.user.permission), { path: "/",expires: now })
         setCookie("firstname", response.data.user.firstname, { path: "/",expires: now })
         setCookie("lastname", response.data.user.lastname, { path: "/",expires: now })
-        setPermission(parseInt(response.data.user.permission))
-
-        console.log(parseInt(response.data.user.permission))
-        console.log(parseInt(response.data.user.permission)==1)
-        console.log(parseInt(response.data.user.permission)==0)
         if (parseInt(response.data.user.permission)==0){
           navigate("/Admin");
         } else if (parseInt(response.data.user.permission)==1) {
